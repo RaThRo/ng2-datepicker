@@ -23,7 +23,8 @@
       <span *ngFor="let d of days; let i = index;"
             (click)="selectDate($event, i)"
             [class.today]="d.today"
-            [class.is-active]="d.selected">
+            [class.is-active]="d.selected"
+            [class.is-empty]="d.day < 1">
         {{ d.day }}
       </span>
     </div>
