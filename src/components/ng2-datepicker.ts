@@ -1,5 +1,5 @@
-import { Component, ViewContainerRef, forwardRef, OnInit, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {Component, ViewContainerRef, forwardRef, OnInit, Input} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import * as moment_ from 'moment';
 
 const moment: any = (<any>moment_).default || moment_;
@@ -33,26 +33,28 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() format: string;
   @Input() viewFormat: string;
   @Input() firstWeekdaySunday: boolean;
-  @Input() weekdays: {[index: string]: string} =
-  {
-    monday: 'Mon',
-    tuesday: 'Tue',
-    wednesday: 'Wed',
-    thursday: 'Thu',
-    friday: 'Fri',
-    saturday: 'Sat',
-    sunday: 'Sun'
+  @Input() weekdays =
+    {
+      monday: 'Mon',
+      tuesday: 'Tue',
+      wednesday: 'Wed',
+      thursday: 'Thu',
+      friday: 'Fri',
+      saturday: 'Sat',
+      sunday: 'Sun'
+    };
+
+  date: any = moment();
+  onChange: Function;
+  onTouched: Function;
+  el: Element;
+  viewDate: string = null;
+  days: CalendarDate[] = [];
+
+  onTouchedCallback: () => void = () => {
   };
-
-  private date: any = moment();
-  private onChange: Function;
-  private onTouched: Function;
-  private el: Element;
-  private viewDate: string = null;
-  private days: CalendarDate[] = [];
-
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+  onChangeCallback: (_: any) => void = () => {
+  };
 
   constructor(viewContainerRef: ViewContainerRef) {
     this.el = viewContainerRef.element.nativeElement;
@@ -85,7 +87,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
     let body = document.querySelector('body');
     body.addEventListener('click', e => {
-      if (!this.opened || !e.target) { return; };
+      if (!this.opened || !e.target) {
+        return;
+      }
+      ;
       if (this.el !== e.target && !this.el.contains((<any>e.target))) {
         this.close();
       }
@@ -124,7 +129,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
           day: null,
           month: null,
           year: null,
-          enabled:false,
+          enabled: false,
           today: false,
           selected: false
         });
